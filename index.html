@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cronograma de Lançamento DFM — Vigo &amp; Box</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2128;--line:#30363d;--tx:#e6edf3;--tx2:#8b949e;--tx3:#6e7681;
+--ml:#ffe600;--crit:#f85149;--ok:#3fb950;--dfm:#58a6ff;--mp:#bc8cff;--kez:#39c5cf;--warn:#d29922;
+--soa:#f0883e;--wag:#f778ba}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1440px;margin:0 auto;padding:28px 22px 80px}
+header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:26px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+h1{margin:8px 0 4px;font-size:31px;line-height:1.15;letter-spacing:-.6px}h1 span{color:var(--ml)}
+.sub{color:var(--tx2);font-size:14px}
+.lock{display:inline-block;margin-top:12px;background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.4);color:#ff9a94;font-size:12px;padding:5px 11px;border-radius:6px;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0 26px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px 16px}
+.kpi .n{font-size:28px;font-weight:700;letter-spacing:-1px;line-height:1}
+.kpi .l{font-size:11px;color:var(--tx2);text-transform:uppercase;letter-spacing:.07em;margin-top:7px;font-weight:600}
+.kpi.hero{background:linear-gradient(150deg,#2b2400,#161b22);border-color:rgba(255,230,0,.35)}.kpi.hero .n{color:var(--ml)}
+.kpi.warn .n{color:var(--crit)}.kpi.good .n{color:var(--ok)}
+.prog{height:7px;border-radius:4px;background:var(--panel2);overflow:hidden;display:flex;margin-top:10px}
+.prog i{display:block;height:100%}
+h2{font-size:19px;margin:40px 0 6px;letter-spacing:-.3px;display:flex;align-items:center;gap:9px}
+h2 .num{font-size:11px;color:var(--tx3);font-weight:700;background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:2px 7px}
+h3{font-size:14px;margin:22px 0 8px}
+.lead{color:var(--tx2);font-size:14px;margin:0 0 18px;max-width:88ch}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:16px;position:sticky;top:0;z-index:20}
+.controls .lab{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-right:2px}
+button.f{background:var(--panel2);border:1px solid var(--line);color:var(--tx2);font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:20px;cursor:pointer;transition:.13s}
+button.f:hover{border-color:#4b5562;color:var(--tx)}
+button.f[aria-pressed="true"]{background:var(--tx);color:#0d1117;border-color:var(--tx)}
+button.f.crit[aria-pressed="true"]{background:var(--crit);border-color:var(--crit);color:#fff}
+button.f.gap[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:#0d1117}
+.sep{width:1px;height:20px;background:var(--line);margin:0 4px}
+button.open{background:var(--ml);border:1px solid var(--ml);color:#0d1117;font:inherit;font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+button.open:hover{filter:brightness(1.08)}
+button.back{background:var(--panel2);border:1px solid var(--line);color:var(--tx);font:inherit;font-size:13px;font-weight:700;padding:8px 15px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+button.back:hover{border-color:#4b5562;background:#22282f}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:20px}
+@media print{.topbar{display:none}}
+.gantt{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.gscroll{overflow-x:auto}.ginner{min-width:1480px}
+.grow{display:grid;grid-template-columns:620px 1fr;border-bottom:1px solid #21262d;align-items:stretch}
+.grow:last-child{border-bottom:0}.grow.sec{background:var(--panel2)}
+.grow.sec .glabel{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);font-weight:700;padding:9px 14px}
+.grow:not(.sec):hover{background:#1a2029}
+.glabel{padding:8px 14px;display:grid;grid-template-columns:24px 1fr 152px;gap:9px;align-items:center;min-width:0;border-right:1px solid #21262d}
+.grow.sec .glabel{display:block}
+.gowner{font-size:10.5px;font-weight:700;line-height:1.28;display:flex;gap:6px;align-items:flex-start;padding-left:10px;border-left:1px solid #21262d;min-height:16px}
+.gowner i{width:7px;height:7px;border-radius:50%;flex:none;margin-top:4px}
+.ghead{font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);font-weight:700}
+.gid{font-size:10.5px;color:var(--tx3);font-weight:700;min-width:20px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
+.gname{font-size:12.5px;line-height:1.32;white-space:normal;overflow-wrap:break-word;flex:1;min-width:0}
+.gname.done{color:var(--tx3);text-decoration:line-through;text-decoration-color:var(--tx3)}
+.dot{width:7px;height:7px;border-radius:50%;flex:none;align-self:flex-start;margin-top:5px}
+.gtrack{position:relative;display:grid;padding:7px 0}
+.gcol{border-left:1px solid #21262d;grid-row:1}
+.gcol.we{background:rgba(255,255,255,.022)}
+.gcol.past{background:rgba(255,255,255,.014)}
+.gcol.today{background:rgba(63,185,80,.13);border-left:1px solid rgba(63,185,80,.6)}
+.gcol.gl{background:rgba(255,230,0,.09);border-left:1px solid rgba(255,230,0,.45)}
+.bar{grid-row:1;height:19px;align-self:center;border-radius:5px;display:flex;align-items:center;padding:0 7px;font-size:10px;font-weight:700;color:#0d1117;white-space:nowrap;overflow:hidden;position:relative;z-index:2}
+.bar.critbar{box-shadow:0 0 0 1.5px var(--crit),0 0 11px rgba(248,81,73,.4)}
+.bar.donebar{opacity:.38}
+.ms{grid-row:1;align-self:center;height:19px;display:flex;align-items:center;justify-content:center;z-index:3}
+.ms i{width:13px;height:13px;background:var(--ml);transform:rotate(45deg);display:block;border-radius:2px}
+.ms.gate i{background:var(--tx2)}
+.gaxis,.gweeks{display:grid;grid-template-columns:620px 1fr;border-bottom:1px solid var(--line)}
+.gaxis{background:var(--panel2)}.gweeks{background:#12171e}
+.gaxis .sp,.gweeks .sp{border-right:1px solid #21262d}
+.gaxis .days,.gweeks .ws{display:grid}
+.gaxis .d{border-left:1px solid #21262d;text-align:center;padding:6px 0 5px;font-size:9.5px;color:var(--tx3);font-weight:700;font-variant-numeric:tabular-nums}
+.gaxis .d.we{background:rgba(255,255,255,.03);color:#484f58}
+.gaxis .d.today{background:rgba(63,185,80,.16);color:var(--ok)}
+.gaxis .d.gl{background:rgba(255,230,0,.1);color:var(--ml)}
+.gaxis .d b{display:block;font-size:8px;font-weight:600;letter-spacing:.03em;opacity:.75;text-transform:uppercase}
+.gweeks .w{border-left:1px solid #21262d;font-size:9.5px;color:var(--tx3);letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:5px 0 4px;text-align:center}
+.legend{display:flex;flex-wrap:wrap;gap:15px;padding:11px 14px;border-top:1px solid var(--line);background:var(--panel2);font-size:11.5px;color:var(--tx2)}
+.legend span{display:flex;align-items:center;gap:6px}
+.sw{width:11px;height:11px;border-radius:3px;flex:none}
+.empty{padding:34px 14px;text-align:center;color:var(--tx3);font-size:13px}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px}
+th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);padding:9px 11px;border-bottom:1px solid var(--line);background:var(--panel2);font-weight:700;white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid #21262d;vertical-align:top}
+td.act{min-width:330px;line-height:1.4}
+tr:last-child td{border-bottom:0}tbody tr:hover{background:#1a2029}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;width:1%}
+tr.done td{color:var(--tx3)}
+.mono{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--tx2);font-size:12px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.dep{font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.04em;padding:2px 6px;border-radius:4px;text-transform:uppercase;white-space:nowrap}
+.pill.c{background:rgba(248,81,73,.16);color:#ff9a94;border:1px solid rgba(248,81,73,.35)}
+.pill.g{background:rgba(210,153,34,.16);color:#e3b341;border:1px solid rgba(210,153,34,.35)}
+.pill.u{background:rgba(248,81,73,.1);color:#ff9a94}
+.pill.i{background:var(--panel2);color:var(--tx2);border:1px solid var(--line)}
+.st{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;white-space:nowrap}
+.st.ok{color:var(--ok)}.st.pend{color:var(--warn)}.st.todo{color:var(--tx3)}
+.st i{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px}
+.card.crit{border-color:rgba(248,81,73,.4);background:linear-gradient(160deg,rgba(248,81,73,.07),var(--panel))}
+.card h4{margin:0 0 8px;font-size:13px;display:flex;align-items:center;gap:7px}
+.card p{margin:0;font-size:12.5px;color:var(--tx2)}
+.chain{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px 17px;font-size:12.5px;line-height:2;margin-bottom:12px}
+.chain .hd{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);font-weight:700;margin-bottom:8px;line-height:1.4}
+.chain .step{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:4px 9px;margin:2px 0;font-weight:600}
+.chain .step.c{border-color:rgba(248,81,73,.45);background:rgba(248,81,73,.1)}
+.chain .arw{color:var(--tx3);margin:0 4px;font-weight:700}
+.chain .dt{font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums;font-weight:700}
+.check{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:5px 3px}
+.check .ci{display:flex;gap:10px;align-items:flex-start;padding:8px 13px;border-bottom:1px solid #21262d;font-size:13px}
+.check .ci:last-child{border-bottom:0}
+.check .bx{width:15px;height:15px;border:1.5px solid var(--tx3);border-radius:4px;flex:none;margin-top:2px}
+.check .ci em{display:block;color:var(--tx3);font-size:11.5px;font-style:normal;margin-top:2px}
+.note{border-left:3px solid var(--ml);background:rgba(255,230,0,.05);padding:12px 15px;border-radius:0 8px 8px 0;font-size:13px;color:var(--tx2);margin:14px 0}
+.note.r{border-left-color:var(--crit);background:rgba(248,81,73,.06)}
+.note.g{border-left-color:var(--ok);background:rgba(63,185,80,.05)}
+.note strong{color:var(--tx)}
+footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);color:var(--tx3);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+@media(max-width:720px){h1{font-size:23px}.wrap{padding:20px 14px 60px}
+.grow,.gaxis,.gweeks{grid-template-columns:210px 1fr}
+.glabel{grid-template-columns:24px 1fr}
+.gowner{display:none}.controls{position:static}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Mercado Livre · Vertical 0km</div>
+  <h1>Cronograma de Lançamento <span>DFM</span> — Vigo &amp; Box</h1>
+  <div class="sub">Dongfeng Motor · início 27/07/2026 · Go Live <strong>27/08/2026</strong> · coordenação Bruno Santos (ML) e Igor (DFM)</div>
+</header>
+<div class="kpis">
+  <div class="kpi hero"><div class="n" id="kDias">—</div><div class="l">dias até o Go Live</div></div>
+  <div class="kpi"><div class="n">51</div><div class="l">entregas</div><div class="prog"><i style="background:var(--ok);width:11.8%"></i><i style="background:var(--warn);width:17.6%"></i></div></div>
+  <div class="kpi good"><div class="n">6</div><div class="l">realizadas</div></div>
+  <div class="kpi"><div class="n">9</div><div class="l">pendentes</div></div>
+  <div class="kpi"><div class="n">15</div><div class="l">dias úteis até o gate</div></div>
+  <div class="kpi"><div class="n">22</div><div class="l">entregas incorporadas</div></div>
+</div>
+<h2><span class="num">01</span> Timeline</h2>
+<p class="lead">Barras coloridas por responsável, esmaecidas quando a entrega já foi concluída. Contorno vermelho indica caminho crítico. A coluna verde é hoje; a amarela, o Go Live. Passe o mouse na barra para ver responsável, prioridade, duração e folga.</p>
+<div class="controls">
+  <span class="lab">Responsável</span>
+  <button class="f" data-own="all" aria-pressed="true">Todos</button>
+  <button class="f" data-own="Bruno Santos">Bruno</button>
+  <button class="f" data-own="Kezia">Kezia</button>
+  <button class="f" data-own="Igor Soares">I. Soares</button>
+  <button class="f" data-own="Wagner Alves">Wagner</button>
+  <button class="f" data-own="Igor Moraes">I. Moraes</button>
+  <button class="f" data-own="Bruno + Igor Moraes">Bruno+Moraes</button>
+  <button class="f" data-own="Mercado Pago">MP</button>
+  <span class="sep"></span><span class="lab">Frente</span>
+  <button class="f" data-ws="all" aria-pressed="true">Todas</button>
+  <button class="f" data-ws="0">Conta</button>
+  <button class="f" data-ws="1">Catálogo</button>
+  <button class="f" data-ws="2">Legal/MP</button>
+  <button class="f" data-ws="3">Leads/Reserva</button>
+  <button class="f" data-ws="4">Oferta/Mídia</button>
+  <span class="sep"></span><span class="lab">Status</span>
+  <button class="f" data-st="Realizado">Realizado</button>
+  <button class="f" data-st="Pendente">Pendente</button>
+  <button class="f" data-st="A iniciar">A iniciar</button>
+  <button class="f" data-st="all" aria-pressed="true">Todos</button>
+  <span class="sep"></span>
+  <button class="f crit" id="bCrit" aria-pressed="false">Só crítico</button>
+  <button class="f gap" id="bGap" aria-pressed="false">Só novas</button>
+  <span class="sep"></span>
+  <button class="open" id="bPlano">⧉ Abrir plano detalhado em nova guia</button>
+</div>
+<div class="gantt"><div class="gscroll"><div class="ginner">
+  <div class="gweeks"><div class="sp" style="display:grid;grid-template-columns:24px 1fr 152px;gap:9px;padding:5px 14px 4px"><span></span><span class="ghead">Ação</span><span class="ghead" style="padding-left:10px;border-left:1px solid #21262d">Responsável</span></div><div class="ws" id="axWeeks"></div></div>
+  <div class="gaxis"><div class="sp"></div><div class="days" id="axDays"></div></div>
+  <div id="gantt"></div>
+</div></div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--ml)"></i>Bruno Santos · ML</span>
+    <span><i class="sw" style="background:var(--kez)"></i>Kezia · ML</span>
+    <span><i class="sw" style="background:var(--soa)"></i>Igor Soares · ML</span>
+    <span><i class="sw" style="background:var(--wag)"></i>Wagner Alves · Ads ML</span>
+    <span><i class="sw" style="background:var(--dfm)"></i>Igor Moraes · DFM</span>
+    <span><i class="sw" style="background:var(--ok)"></i>Bruno + Igor Moraes · ML×DFM</span>
+    <span><i class="sw" style="background:var(--mp)"></i>Time Mercado Pago</span>
+    <span><i class="sw" style="box-shadow:0 0 0 1.5px var(--crit);background:transparent"></i>caminho crítico</span>
+    <span><i class="sw" style="background:var(--tx3);opacity:.4"></i>já realizado</span>
+  </div></div>
+<h2><span class="num">02</span> Matriz de responsabilidades</h2>
+<div class="cards" id="cRaci"></div>
+<div class="note r"><strong>Concentração de responsabilidade.</strong> Igor responde por 21 das 51 entregas — 41% do plano. É o risco estrutural do projeto, não um detalhe de alocação.</div>
+<h2><span class="num">03</span> Governança</h2>
+<table><thead><tr><th>Ritual</th><th>Frequência</th><th>Participantes</th></tr></thead><tbody id="tGov"></tbody></table>
+<div class="note"><strong>Escalonamento.</strong> Item com atraso superior a 1 dia útil em relação à data-fim é escalado no checkpoint ML × DFM seguinte. Itens do caminho crítico, no mesmo dia.</div>
+<footer><span>Versão 2.0 · 05/08/2026 · Bruno Santos</span><span>Fonte de verdade: <strong>CRONOGRAMA-LANCAMENTO-DFM-EXTERNO.md</strong> · alterações via pull request</span></footer>
+</div>
+<script>
+"use strict";
+const GOLIVE="2026-08-27",GATE="2026-08-26",D0="2026-07-27",D1="2026-08-27",HOJE_REF="2026-08-06";
+const OWN={"Bruno Santos":{c:"var(--ml)",s:"Bruno Santos · ML"},"Kezia":{c:"var(--kez)",s:"Kezia · ML"},"Igor Soares":{c:"var(--soa)",s:"Igor Soares · ML"},"Wagner Alves":{c:"var(--wag)",s:"Wagner Alves · Ads ML"},"Igor Moraes":{c:"var(--dfm)",s:"Igor Moraes · DFM"},"Bruno + Igor Moraes":{c:"var(--ok)",s:"Bruno + Igor Moraes · ML×DFM"},"Mercado Pago":{c:"var(--mp)",s:"Time Mercado Pago"}};
+const WS=["Conta e Compliance","Catalogo e Paginas","Legal, Mercado Pago e Contratos","Leads, Rede de Dealers e Reserva","Oferta, Entrega e Midia"];
+/* id,ws,acao,owner,prio,status,ini,fim,deps,dur,folga,crit,novo */
+const T=[
+ [1,0,"Criação da conta no Mercado Livre","Bruno Santos","IMPORTANTE","Realizado","2026-07-27","2026-07-27",[],1,8,0,0],
+ [2,0,"Validação do KYC Fase 1","Igor Moraes","IMPORTANTE","Realizado","2026-07-28","2026-07-31",[1],4,7,0,0],
+ [3,0,"Abertura de conta no Backoffice","Bruno Santos","IMPORTANTE","Realizado","2026-08-03","2026-08-04",[2],2,6,0,0],
+ [4,0,"Enviar link para validação da Prova de Vida","Bruno Santos","URGENTE","Realizado","2026-08-05","2026-08-06",[3],2,9,0,0],
+ [5,0,"Validação do KYC Fase 2 — prova de vida","Igor Moraes","URGENTE","Pendente","2026-08-06","2026-08-07",[4],2,9,0,0],
+ [6,0,"Validar a necessidade de assinatura de NDA","Igor Moraes","IMPORTANTE","Pendente","2026-08-05","2026-08-07",[],3,6,0,0],
+ [7,0,"Assinar NDA, caso necessário","Bruno + Igor Moraes","IMPORTANTE","A iniciar","2026-08-10","2026-08-13",[6],4,5,0,0],
+ [8,0,"Validação do Registro de Marca","Igor Moraes","IMPORTANTE","A iniciar","2026-08-06","2026-08-12",[],5,6,0,1],
+ [9,0,"Criação da Loja Oficial no Mercado Livre","Bruno Santos","IMPORTANTE","A iniciar","2026-08-13","2026-08-18",[5,8],4,5,0,1],
+ [10,1,"Enviar assets dos modelos (Vigo e Box)","Igor Moraes","URGENTE","Realizado","2026-07-30","2026-08-04",[],4,3,0,0],
+ [11,1,"Enviar lista de pendências de assets","Kezia","URGENTE","Pendente","2026-08-05","2026-08-07",[10],3,2,0,0],
+ [12,1,"Enviar assets fase 2","Igor Moraes","URGENTE","Pendente","2026-08-07","2026-08-12",[11],4,2,0,0],
+ [13,1,"Enviar ficha técnica completa — versões e planilha de conteúdos","Igor Moraes","URGENTE","A iniciar","2026-08-06","2026-08-11",[],4,3,0,1],
+ [14,1,"Enviar cores e códigos hex das cores","Igor Moraes","URGENTE","A iniciar","2026-08-06","2026-08-10",[],3,4,0,1],
+ [15,1,"Catalogar produtos — Marca / Modelo / Versão","Bruno Santos","URGENTE","Pendente","2026-08-05","2026-08-07",[3],3,5,0,0],
+ [16,1,"Desdobrar peças de especificação para VIP","Kezia","URGENTE","Realizado","2026-07-30","2026-08-04",[],4,8,0,0],
+ [17,1,"Desdobrar peças de especificação para Eshop","Kezia","IMPORTANTE","A iniciar","2026-08-11","2026-08-13",[13],3,3,0,1],
+ [18,1,"Construir VIP — Vigo e Box","Kezia","URGENTE","A iniciar","2026-08-12","2026-08-18",[12,14,15,16],5,2,0,0],
+ [19,1,"Enviar assets do Eshop (LP da marca)","Igor Moraes","URGENTE","A iniciar","2026-08-06","2026-08-12",[],5,4,0,1],
+ [20,1,"Construir Eshop","Kezia","URGENTE","A iniciar","2026-08-13","2026-08-19",[17,19],5,3,0,0],
+ [21,1,"Definir countdown — data de início e término","Bruno + Igor Moraes","IMPORTANTE","A iniciar","2026-08-12","2026-08-14",[],3,7,0,1],
+ [22,1,"Enviar links de VIPs e Eshop para aprovação","Kezia","URGENTE","A iniciar","2026-08-19","2026-08-19",[18,20],1,3,0,0],
+ [23,1,"Aprovar páginas","Igor Moraes","URGENTE","A iniciar","2026-08-20","2026-08-21",[22],2,2,0,0],
+ [24,2,"Agendar reunião com time de Mercado Pago","Bruno Santos","URGENTE","Pendente","2026-08-05","2026-08-07",[],3,2,0,0],
+ [25,2,"Reunião de configuração da conta MP (PIX e Boleto) e meios de pagamento","Bruno Santos","URGENTE","A iniciar","2026-08-07","2026-08-13",[24],5,2,0,0],
+ [26,2,"Formalização interna no Mercado Pago","Mercado Pago","URGENTE","A iniciar","2026-08-13","2026-08-18",[25],4,2,0,0],
+ [27,2,"Envio do Termo de Compromisso","Igor Moraes","URGENTE","A iniciar","2026-08-07","2026-08-13",[],5,8,0,1],
+ [28,2,"Enviar arquivo de funcionamento do financiamento, termos e condições e política de privacidade","Igor Moraes","URGENTE","A iniciar","2026-08-07","2026-08-13",[],5,8,0,1],
+ [29,2,"Enviar contrato para assinatura das partes","Bruno Santos","URGENTE","A iniciar","2026-08-18","2026-08-21",[7,26],4,2,0,0],
+ [30,2,"Onboarding do financeiro DFM na operação de pagamentos","Mercado Pago","URGENTE","A iniciar","2026-08-21","2026-08-25",[26],3,0,1,0],
+ [31,3,"Desenvolver sistema de envio dos leads via CSV","Bruno Santos","URGENTE","Pendente","2026-08-05","2026-08-14",[],8,5,0,0],
+ [32,3,"Enviar base de dealers completa — dealer code, CEP, endereço","Igor Moraes","URGENTE","Pendente","2026-08-05","2026-08-10",[],4,3,0,0],
+ [33,3,"Validar dealers que estão operando 100%","Igor Moraes","URGENTE","A iniciar","2026-08-11","2026-08-14",[32],4,2,0,1],
+ [34,3,"Cadastrar rede de dealers no Backoffice","Bruno Santos","URGENTE","A iniciar","2026-08-14","2026-08-18",[3,33],3,2,0,0],
+ [35,3,"Realizar teste de envio de leads","Bruno Santos","URGENTE","A iniciar","2026-08-17","2026-08-18",[31],2,4,0,0],
+ [36,3,"Validar recebimento do arquivo com os dados de lead","Igor Moraes","URGENTE","A iniciar","2026-08-19","2026-08-20",[35],2,3,0,0],
+ [37,3,"Habilitar reserva para usuários não logados","Igor Soares","URGENTE","A iniciar","2026-08-11","2026-08-18",[],6,2,0,1],
+ [38,3,"Habilitar reserva para teste","Bruno Santos","URGENTE","A iniciar","2026-08-19","2026-08-21",[18,25,34,37],3,1,1,0],
+ [39,3,"Validar recebimento do arquivo com dados de lead e reserva","Igor Moraes","URGENTE","A iniciar","2026-08-21","2026-08-24",[38],2,1,1,0],
+ [40,4,"Definir benefícios comerciais da reserva","Bruno + Igor Moraes","URGENTE","A iniciar","2026-08-06","2026-08-13",[],6,0,1,1],
+ [41,4,"Definir killer offer — chamada de comunicação","Bruno + Igor Moraes","URGENTE","A iniciar","2026-08-13","2026-08-18",[40],4,0,1,1],
+ [42,4,"Definição da data e volume de entrega do lote","Igor Moraes","URGENTE","A iniciar","2026-08-06","2026-08-12",[],5,5,0,1],
+ [43,4,"Envio de chassis do lote","Igor Moraes","URGENTE","A iniciar","2026-08-13","2026-08-19",[42],5,4,0,1],
+ [44,4,"Reunião com agência da DFM para rastreios de mídia externa","Bruno Santos","URGENTE","A iniciar","2026-08-12","2026-08-14",[],3,7,0,1],
+ [45,4,"Aprovação do plano de mídia","Igor Moraes","URGENTE","Pendente","2026-08-05","2026-08-07",[],3,6,0,0],
+ [46,4,"Envio dos assets de mídia","Igor Moraes","URGENTE","A iniciar","2026-08-10","2026-08-13",[45],4,5,0,1],
+ [47,4,"Desdobramento das peças de mídia","Wagner Alves","URGENTE","A iniciar","2026-08-13","2026-08-18",[46],4,5,0,1],
+ [48,4,"Aprovar criativos para campanha de mídia","Igor Moraes","URGENTE","A iniciar","2026-08-18","2026-08-20",[47],3,5,0,1],
+ [49,4,"Subir campanha de mídia","Wagner Alves","URGENTE","A iniciar","2026-08-27","2026-08-27",[48],1,0,1,1],
+ [50,4,"PR — atuação conjunta com times de Comunicação (Meli e DFM)","Bruno + Igor Moraes","IMPORTANTE","A iniciar","2026-08-18","2026-08-25",[41],6,0,0,1],
+ [51,4,"Planejamento pós-lançamento","Bruno + Igor Moraes","IMPORTANTE","A iniciar","2026-08-20","2026-08-25",[],4,0,0,1]
+];
+const MS=[["Gate Go / No-Go","2026-08-26",0],["GO LIVE","2026-08-27",1]];
+const BLOCK=[["Conta Mercado Livre ativa e KYC Fase 2 (prova de vida) aprovado",5],["Vigo e Box catalogados e visíveis",15],["VIPs de Vigo e Box publicadas e aprovadas pela DFM",23],["Eshop publicado e aprovado pela DFM",23],["Política de Privacidade e termos e condições publicados — requisito LGPD",28],["Termo de Compromisso recebido",27],["Data e volume de entrega do lote definidos e comunicáveis ao consumidor",42],["Benefícios comerciais e killer offer definidos",41],["Contrato assinado por ambas as partes",29],["Taxas e meios de pagamento da reserva (PIX e Boleto) operacionais",25],["Rede de dealers validada e cadastrada no Backoffice",34],["Reserva habilitada para usuários não logados",37],["Envio de leads via CSV testado e recebimento validado pela DFM",36],["Reserva de teste executada e arquivo de lead + reserva validado",39]];
+const GOV=[["Cobrança de insumos de marca","Diária até 13/08","Bruno, Igor Moraes"],["Checkpoint ML × DFM","2×/semana · terças e quintas","Bruno, Igor Moraes"],["Workshop de benefícios comerciais e killer offer","06/08","Bruno, Igor Moraes"],["Checkpoint de mídia","Semanal · quartas","Bruno, Wagner Alves, Igor Moraes"],["Checkpoint de convergência da reserva (#38)","18/08","Bruno, Kezia, Igor Soares, Igor Moraes"],["Gate Go / No-Go","26/08","Bruno, Igor Moraes + sponsors"]];
+
+const DAY=864e5,d=s=>new Date(s+"T00:00:00Z"),iso=x=>x.toISOString().slice(0,10);
+const days=(a,b)=>Math.round((d(b)-d(a))/DAY);
+const WDN=["dom","seg","ter","qua","qui","sex","sáb"];
+const fmt=s=>s.slice(8,10)+"/"+s.slice(5,7);
+const isWE=s=>{const w=d(s).getUTCDay();return w===0||w===6};
+function bizDays(a,b){let n=0;for(let i=0;i<=days(a,b);i++){if(!isWE(iso(new Date(d(a).getTime()+i*DAY))))n++}return n}
+const STC={"Realizado":"ok","Pendente":"pend","A iniciar":"todo"};
+const byId={};T.forEach(t=>byId[t[0]]=t);
+const N=days(D0,D1)+1,DATES=[];
+for(let i=0;i<N;i++)DATES.push(iso(new Date(d(D0).getTime()+i*DAY)));
+const COLS=`repeat(${N},minmax(26px,1fr))`;
+let TODAY=iso(new Date());
+if(TODAY<D0||TODAY>D1)TODAY=HOJE_REF;
+
+(function(){
+ const wk=document.getElementById("axWeeks"),dy=document.getElementById("axDays");
+ wk.style.gridTemplateColumns=COLS;dy.style.gridTemplateColumns=COLS;
+ let i=0,lab=1;
+ while(i<N){let sp=0;const st=i;
+  while(i<N&&(sp===0||d(DATES[i]).getUTCDay()!==1)){sp++;i++}
+  const e=document.createElement("div");e.className="w";
+  e.style.gridColumn=(st+1)+" / span "+sp;e.textContent="S"+(lab++)+" · "+fmt(DATES[st]);wk.appendChild(e)}
+ DATES.forEach(t=>{const e=document.createElement("div");
+  e.className="d"+(isWE(t)?" we":"")+(t===TODAY?" today":"")+(t===GOLIVE?" gl":"");
+  e.innerHTML="<b>"+WDN[d(t).getUTCDay()]+"</b>"+t.slice(8,10);dy.appendChild(e)})})();
+
+function bg(){const f=document.createDocumentFragment();
+ DATES.forEach((t,i)=>{const c=document.createElement("div");
+  c.className="gcol"+(isWE(t)?" we":t<TODAY?" past":"")+(t===TODAY?" today":"")+(t===GOLIVE?" gl":"");
+  c.style.gridColumn=(i+1)+" / span 1";f.appendChild(c)});return f}
+
+function row(lbl,id,color,cls,inner,ownKey){
+ const r=document.createElement("div");r.className="grow "+(cls||"");
+ const l=document.createElement("div");l.className="glabel";
+ l.innerHTML='<span class="gid">'+(id||"")+'</span>'+
+  '<span class="gname'+(cls==="isdone"?" done":"")+'">'+lbl+'</span>'+
+  '<span class="gowner"'+(color?' style="color:'+color+'"':'')+'>'+
+   (color?'<i style="background:'+color+'"></i>':'')+
+   '<span>'+(ownKey||"")+'</span></span>';
+ const tr=document.createElement("div");tr.className="gtrack";tr.style.gridTemplateColumns=COLS;tr.appendChild(bg());
+ if(inner)inner(tr);r.appendChild(l);r.appendChild(tr);return r}
+
+let fOwn="all",fWs="all",fSt="all",fCrit=false,fGap=false;
+const pass=t=>!(fCrit&&!t[11])&&!(fGap&&!t[12])&&(fOwn==="all"||t[3]===fOwn)&&
+ (fWs==="all"||t[1]===+fWs)&&(fSt==="all"||t[5]===fSt);
+
+function draw(){
+ const g=document.getElementById("gantt");g.textContent="";let shown=0;
+ WS.forEach((name,wi)=>{
+  const list=T.filter(t=>t[1]===wi&&pass(t));if(!list.length)return;shown+=list.length;
+  const sec=document.createElement("div");sec.className="grow sec";
+  sec.innerHTML='<div class="glabel">'+name+'</div>';
+  const st=document.createElement("div");st.className="gtrack";st.style.gridTemplateColumns=COLS;
+  st.appendChild(bg());sec.appendChild(st);g.appendChild(sec);
+  list.forEach(t=>{const o=OWN[t[3]],done=t[5]==="Realizado";
+   g.appendChild(row(t[2]+(t[12]?" 🆕":""),t[0],o.c,done?"isdone":"",tr=>{
+    const b=document.createElement("div");
+    b.className="bar"+(t[11]?" critbar":"")+(done?" donebar":"");
+    b.style.cssText="grid-column:"+(days(D0,t[6])+1)+" / span "+(days(t[6],t[7])+1)+";background:"+o.c;
+    b.title="#"+t[0]+" "+t[2]+"\n"+o.s+"\n"+t[4]+" · "+t[5]+"\n"+fmt(t[6])+" → "+fmt(t[7])+
+     " · "+t[9]+" dias úteis\nfolga: "+t[10]+"d"+(t[11]?"\n⚠ caminho crítico":"")+(t[12]?"\n🆕 entrega incorporada em 05/08":"");
+    b.textContent=t[9]+"d";tr.appendChild(b)},t[3]))})});
+ if(fOwn==="all"&&fWs==="all"&&fSt==="all"&&!fCrit&&!fGap){
+  const sec=document.createElement("div");sec.className="grow sec";
+  sec.innerHTML='<div class="glabel">Lançamento</div>';
+  const st=document.createElement("div");st.className="gtrack";st.style.gridTemplateColumns=COLS;
+  st.appendChild(bg());sec.appendChild(st);g.appendChild(sec);
+  MS.forEach(([nm,dt,gl])=>g.appendChild(row(nm,"","var(--ml)","",tr=>{
+   const m=document.createElement("div");m.className="ms"+(gl?"":" gate");
+   m.style.gridColumn=(days(D0,dt)+1)+" / span 1";m.title=nm+" · "+fmt(dt);
+   m.innerHTML="<i></i>";tr.appendChild(m)},"Bruno + Igor Moraes")))}
+ if(!shown){const e=document.createElement("div");e.className="empty";
+  e.textContent="Nenhuma entrega corresponde aos filtros selecionados.";g.appendChild(e)}
+ plano()}
+
+function plano(){}
+
+/* ---------- plano detalhado em nova guia ---------- */
+const BLKSET=new Set(BLOCK.map(b=>b[1]));
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function filtrosAtivos(){
+ const f=[];
+ if(fOwn!=="all")f.push("responsável: "+fOwn);
+ if(fWs!=="all")f.push("frente: "+WS[+fWs]);
+ if(fSt!=="all")f.push("status: "+fSt);
+ if(fCrit)f.push("só caminho crítico");
+ if(fGap)f.push("só entregas incorporadas");
+ return f.length?f.join(" · "):"nenhum filtro aplicado";
+}
+function planoHTML(){
+ const vis=T.filter(pass);
+ const css=document.querySelector("style").textContent;
+ let rows="";
+ WS.forEach((nome,wi)=>{
+  const list=vis.filter(t=>t[1]===wi);if(!list.length)return;
+  rows+="<tr class='wsrow'><td colspan='11'>WS"+(wi+1)+" — "+esc(nome)+"</td></tr>";
+  list.forEach(t=>{const o=OWN[t[3]],done=t[5]==="Realizado";
+   rows+="<tr"+(done?" class='done'":"")+">"+
+    "<td class='n mono'>"+t[0]+"</td>"+
+    "<td class='act'>"+esc(t[2])+(t[12]?" <span class='pill g'>nova</span>":"")+
+      (t[11]?" <span class='pill c'>crítico</span>":"")+"</td>"+
+    "<td><span class='tag' style='background:"+o.c+"22;color:"+o.c+"'>"+
+      "<i class='dot' style='background:"+o.c+"'></i>"+esc(o.s)+"</span></td>"+
+    "<td class='n'><span class='pill "+(t[4]==="URGENTE"?"u":"i")+"'>"+t[4]+"</span></td>"+
+    "<td><span class='st "+STC[t[5]]+"'><i></i>"+t[5]+"</span></td>"+
+    "<td class='n mono'>"+fmt(t[6])+"</td>"+
+    "<td class='n mono'>"+fmt(t[7])+"</td>"+
+    "<td class='n mono'>"+t[9]+"d</td>"+
+    "<td class='n mono'"+(t[10]<=1&&!done?" style='color:var(--crit);font-weight:700'":"")+">"+
+      (done?"—":t[10]+"d")+"</td>"+
+    "<td class='n'>"+(BLKSET.has(t[0])?"<span class='pill c'>Sim</span>":"<span class='pill i'>Não</span>")+"</td>"+
+    "<td class='dep'>"+(t[8].length?t[8].map(x=>"#"+x).join(", "):"—")+"</td></tr>"})});
+ if(!vis.length)rows="<tr><td colspan='11' style='text-align:center;color:var(--tx3);padding:26px'>"+
+   "Nenhuma entrega corresponde aos filtros.</td></tr>";
+ return "<!DOCTYPE html><html lang='pt-BR'><head><meta charset='utf-8'>"+
+  "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+  "<title>Plano detalhado — Cronograma DFM</title><style>"+css+
+  "\n.wrap{max-width:1560px}.act{min-width:340px}"+
+  "tr.wsrow td{background:var(--panel2);font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;"+
+  "font-weight:700;color:var(--tx2);padding:9px 11px}"+
+  "@media print{body{background:#fff;color:#000}.wrap{padding:0}}"+
+  "</style></head><body><div class='wrap'>"+
+  "<div class='topbar'><button class='back' id='bVoltar'>&#8592; Voltar para a timeline</button>"+
+  "<span class='dep'>ou feche esta guia</span></div>"+
+  "<header><div class='eyebrow'>Mercado Livre · Vertical 0km</div>"+
+  "<h1>Plano detalhado — <span>DFM</span> Vigo &amp; Box</h1>"+
+  "<div class='sub'>"+vis.length+" de "+T.length+" entregas · "+esc(filtrosAtivos())+
+  " · Go Live <strong>27/08/2026</strong></div></header>"+
+  "<table><thead><tr><th class='n'>#</th><th>Ação</th><th>Responsável</th><th class='n'>Prio.</th>"+
+  "<th>Status</th><th class='n'>Início</th><th class='n'>Fim</th><th class='n'>Dur.</th>"+
+  "<th class='n'>Folga</th><th class='n'>Bloqueia<br>Go Live</th><th>Depende</th></tr></thead>"+
+  "<tbody>"+rows+"</tbody></table>"+
+  "<div class='note'><strong>Lançamento.</strong> #"+(T.length+1)+" Gate Go/No-Go em 26/08 · #"+
+  (T.length+2)+" Go Live em 27/08. Folga em dias úteis, calculada por passagem regressiva.</div>"+
+  "<footer><span>Versão 2.0 · 05/08/2026 · Bruno Santos</span>"+
+  "<span>Gerado a partir de cronograma-dfm.html</span></footer></div>"+
+  "<script>document.getElementById('bVoltar').onclick=function(){"+
+  "try{if(window.opener&&!window.opener.closed){window.opener.focus();window.close();return}}catch(e){}"+
+  "if(history.length>1){history.back();return}"+
+  "try{window.close()}catch(e){}"+
+  "};<\/script>"+
+  "</body></html>";
+}
+document.getElementById("bPlano").onclick=function(){
+ const h=planoHTML();
+ let win=null;
+ try{win=window.open("","_blank")}catch(e){}
+ if(win&&win.document){win.document.open();win.document.write(h);win.document.close();return}
+ try{
+  const url=URL.createObjectURL(new Blob([h],{type:"text/html"}));
+  if(!window.open(url,"_blank"))location.href=url;
+ }catch(e){alert("Não foi possível abrir a nova guia. Verifique o bloqueador de pop-ups.")}
+};
+
+/* estaticos */
+document.getElementById("tGov").innerHTML=GOV.map(g=>
+ "<tr><td>"+g[0]+"</td><td class='mono'>"+g[1]+"</td><td style='color:var(--tx2)'>"+g[2]+"</td></tr>").join("");
+
+
+(function(){const c=document.getElementById("cRaci"),by={};
+ T.forEach(t=>{(by[t[3]]=by[t[3]]||[]).push(t)});
+ Object.keys(OWN).forEach(k=>{const l=by[k]||[];if(!l.length)return;
+  const o=OWN[k],nc=l.filter(t=>t[11]).length,nr=l.filter(t=>t[5]==="Realizado").length,
+   np=l.filter(t=>t[5]==="Pendente").length;
+  const e=document.createElement("div");e.className="card"+(nc?" crit":"");
+  e.innerHTML="<h4><i class='dot' style='background:"+o.c+"'></i>"+o.s+"</h4>"+
+   "<p><strong style='color:var(--tx);font-size:21px'>"+l.length+"</strong> entregas"+
+   (nc?" · <span style='color:var(--crit);font-weight:700'>"+nc+" críticas</span>":"")+
+   "<br><span class='st ok' style='font-size:11px'><i></i>"+nr+" realizadas</span> &nbsp; "+
+   "<span class='st pend' style='font-size:11px'><i></i>"+np+" pendentes</span>"+
+   "<br><span class='dep'>"+l.map(t=>"#"+t[0]).join(", ")+"</span></p>";
+  c.appendChild(e)})})();
+
+(function(){const t=new Date(),
+ today=iso(new Date(Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()))),
+ k=document.getElementById("kDias"),n=days(today,GOLIVE);
+ if(n>0){k.textContent=n;k.nextElementSibling.textContent=(bizDays(today,GOLIVE)-1)+" dias úteis restantes"}
+ else if(n===0){k.textContent="HOJE";k.style.fontSize="23px";k.nextElementSibling.textContent="dia do Go Live"}
+ else{k.textContent="D+"+(-n);k.nextElementSibling.textContent="dias após o Go Live"}})();
+
+function bind(sel,fn){document.querySelectorAll(sel).forEach(b=>b.onclick=()=>{
+ document.querySelectorAll(sel).forEach(x=>x.setAttribute("aria-pressed","false"));
+ b.setAttribute("aria-pressed","true");fn(b);draw()})}
+bind("button.f[data-own]",b=>fOwn=b.dataset.own);
+bind("button.f[data-ws]",b=>fWs=b.dataset.ws);
+bind("button.f[data-st]",b=>fSt=b.dataset.st);
+document.getElementById("bCrit").onclick=function(){fCrit=!fCrit;
+ this.setAttribute("aria-pressed",fCrit?"true":"false");draw()};
+document.getElementById("bGap").onclick=function(){fGap=!fGap;
+ this.setAttribute("aria-pressed",fGap?"true":"false");draw()};
+draw();
+
+
+</script>
+</body>
+</html>
